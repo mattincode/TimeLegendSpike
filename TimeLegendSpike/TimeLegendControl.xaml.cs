@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using TimeLegendSpike.Helpers;
 
 namespace TimeLegendSpike
 {
     public partial class TimeLegendControl : UserControl
     {
         private SolidColorBrush _timeLegendFontBrush = new SolidColorBrush(Colors.Black);
-        private const int TIncMinutes = 30; // 30 minutes
-        private const int VIncPx = 15;
-        private const int VTextOffset = 0;
 
         #region Dependency properties
         public static readonly DependencyProperty StartProperty = DependencyProperty.Register("Start", typeof(DateTime), typeof(UserControl), new PropertyMetadata(null));
@@ -22,6 +19,16 @@ namespace TimeLegendSpike
             set
             {
                 SetValue(StartProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty EndProperty = DependencyProperty.Register("End", typeof(DateTime), typeof(UserControl), new PropertyMetadata(null));
+        public DateTime End
+        {
+            get { return (DateTime)GetValue(EndProperty); }
+            set
+            {
+                SetValue(EndProperty, value);
             }
         }
 
@@ -39,7 +46,17 @@ namespace TimeLegendSpike
         public TimeLegendControl()
         {
             InitializeComponent();
+
+            // Subscribe to change notifications
+            DependencyPropertyChangedListener startPeriodListener = DependencyPropertyChangedListener.Create(this, "Start");
+            startPeriodListener.ValueChanged += StartPeriodChanged;
             this.SizeChanged += TimeLegendControl_SizeChanged;
+        }
+
+        void StartPeriodChanged(object sender, DependencyPropertyValueChangedEventArgs e)
+        {
+            Debug.WriteLine("#TimeLegendControl_StartPeriodChanged");
+            DrawTime();
         }
 
         void TimeLegendControl_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -52,15 +69,18 @@ namespace TimeLegendSpike
         {
             double maxWidth = 0;
             double height = LayoutRoot.ActualHeight;
-            if (double.IsNaN(height) || height < VIncPx)
+
+            // Sanity check
+            if (double.IsNaN(height) || height < Constants.VIncPx)
             {
                 Debug.WriteLine("#TimeLegendControl.DrawTime Height: NaN");
                 return;
             }
 
             DateTime currentTime = Start;
-            var from = new Point(0, VTextOffset);
-            int count = (int)height / VIncPx;
+            var from = new Point(0, Constants.VTextOffset);
+            // Calulate the number of times we can draw based on the height
+            int count = (int)height / Constants.VIncPx;
             LayoutRoot.Children.Clear();
 
             for (int i = 0; i < count; i++)
@@ -73,11 +93,13 @@ namespace TimeLegendSpike
                                         _timeLegendFontBrush,
                                         verticalAlignment: VerticalAlignment.Top));
 
-                from.Y += VIncPx;
-                currentTime = currentTime.AddMinutes(TIncMinutes);
+                from.Y += Constants.VIncPx;
+                currentTime = currentTime.AddMinutes(Constants.TIncMinutes);
                 //Debug.WriteLine("#TimeLegendControl.DrawTime Y:{0}", from.Y);
             }
+            // Report back result of the draw operation
             ActualTextWidth = maxWidth;
+            End = currentTime.AddMinutes(-Constants.TIncMinutes);
 
         }
     }

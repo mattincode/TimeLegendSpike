@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Windows.Controls;
+using Jounce.Core.Command;
+using Jounce.Framework.Command;
+using TimeLegendSpike.ViewModels;
 
 namespace TimeLegendSpike
 {
     public partial class MainPage : UserControl
     {
-        readonly TestDataContext _context = new TestDataContext();
+        readonly MainViewModel _context = new MainViewModel();
         public MainPage()
         {
             InitializeComponent();
@@ -13,16 +16,4 @@ namespace TimeLegendSpike
         }
     }
 
-    public class TestDataContext
-    {
-        public DateTime Start { get; set; }
-
-        public TestDataContext()
-        {
-            Start = DateTime.Now;
-        }
-
-        public DateTime PeriodStart { get; set; }
-        public DateTime PeriodEnd { get; set; }
-    }
 }

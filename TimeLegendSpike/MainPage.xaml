@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
              xmlns:timeLegendSpike="clr-namespace:TimeLegendSpike"
+             xmlns:viewModels="clr-namespace:TimeLegendSpike.ViewModels"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
@@ -13,7 +14,7 @@
           HorizontalAlignment="Stretch"
           VerticalAlignment="Stretch"
           Background="White"
-          d:DataContext="{d:DesignInstance timeLegendSpike:TestDataContext,
+          d:DataContext="{d:DesignInstance viewModels:MainViewModel,
                                            IsDesignTimeCreatable=False}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -29,7 +30,8 @@
                       Width="{Binding Path=ActualTextWidth,
                                       ElementName=TimeLegend}"
                       Height="20"
-                      VerticalAlignment="Bottom">
+                      VerticalAlignment="Bottom"
+                      Command="{Binding NavigateBackCommand}">
             <Path Width="16"
                   Height="16"
                   Margin="0,0,0,0"
@@ -53,6 +55,8 @@
         <timeLegendSpike:TimeLegendControl x:Name="TimeLegend"
                                            Grid.Row="1"
                                            Grid.Column="0"
+                                           End="{Binding End,
+                                                         Mode=TwoWay}"
                                            Start="{Binding Start,
                                                            Mode=TwoWay}" />
         <Canvas Grid.Row="1"
@@ -63,7 +67,8 @@
                       Width="{Binding Path=ActualTextWidth,
                                       ElementName=TimeLegend}"
                       Height="20"
-                      VerticalAlignment="Top">
+                      VerticalAlignment="Top"
+                      Command="{Binding NavigateForwardCommand}">
             <Path Width="16"
                   Height="16"
                   Margin="0,0,0,0"
