@@ -80,6 +80,9 @@
     <Reference Include="Telerik.Windows.Controls">
       <HintPath>.\Telerik.Windows.Controls.dll</HintPath>
     </Reference>
+    <Reference Include="Telerik.Windows.Controls.Navigation">
+      <HintPath>.\Telerik.Windows.Controls.Navigation.dll</HintPath>
+    </Reference>
     <Reference Include="Telerik.Windows.Themes.Windows7">
       <HintPath>.\Telerik.Windows.Themes.Windows7.dll</HintPath>
     </Reference>
