@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Jounce.Core.Command;
 using Jounce.Framework.Command;
@@ -9,6 +11,7 @@ namespace TimeLegendSpike.ViewModels
     {
         private DateTime _start;
         private DateTime _end;
+        private List<TopLegendItem> _legendItems;
 
         public DateTime Start
         {
@@ -24,6 +27,8 @@ namespace TimeLegendSpike.ViewModels
 
         public DateTime PeriodStart { get; set; }
         public DateTime PeriodEnd { get; set; }
+
+        public ObservableCollection<TopLegendItem> LegendItems { get; private set; }
         public IActionCommand NavigateBackCommand { get; private set; }
         public IActionCommand NavigateForwardCommand { get; private set; }
 
@@ -32,10 +37,28 @@ namespace TimeLegendSpike.ViewModels
             Start = new DateTime(2014,03,1,10,00,00);
             PeriodStart = Start.AddMinutes(-60);
             PeriodEnd = Start.AddDays(2);
+            LegendItems = getDummyDataLegendItems();
             NavigateBackCommand = new ActionCommand<object>(OnNavigateBack, CanExecuteNavigateBack);
             NavigateForwardCommand = new ActionCommand<object>(OnNavigateForward, CanExecuteNavigateForward);
         }
 
+        private ObservableCollection<TopLegendItem> getDummyDataLegendItems()
+        {
+            const int maxWidth = 30;
+            const int spacingPx = 80;
+            double currentPosition = 0;
+
+            var items = new List<TopLegendItem>();
+            for (int i = 0; i < 5; i++)
+            {
+                items.Add(new TopLegendItem() { Text = "LegendItem" + i, Left = currentPosition, MaxWidth = maxWidth });
+                currentPosition += spacingPx;
+            }
+
+            return new ObservableCollection<TopLegendItem>(items);
+        }
+
+        #region Commands
         private bool CanExecuteNavigateBack(object o)
         {
             var canExecute = (Start > PeriodStart);
@@ -65,6 +88,7 @@ namespace TimeLegendSpike.ViewModels
             var newEnd = End.AddMinutes(Constants.TIncMinutes);
             Start = newEnd > PeriodEnd ? PeriodStart : Start.AddMinutes(Constants.TIncMinutes);
         }
+        #endregion Commands
     }
 
 }

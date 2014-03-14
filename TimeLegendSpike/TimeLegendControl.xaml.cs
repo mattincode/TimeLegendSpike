@@ -85,12 +85,13 @@ namespace TimeLegendSpike
 
             for (int i = 0; i < count; i++)
             {
-                maxWidth = Math.Max(maxWidth, TimeLegendText.DrawText(LayoutRoot.Children,
+                maxWidth = Math.Max(maxWidth, TextHelper.DrawText(LayoutRoot.Children,
                                         new Point(from.X, from.Y),
                                         MaxWidth,
                                         string.Format("{0} {1}", currentTime.ToShortDateString(),
                                         string.Format("{0:HH:mm}", currentTime)),
                                         _timeLegendFontBrush,
+                                        horizontalAlignment: HorizontalAlignment.Left,
                                         verticalAlignment: VerticalAlignment.Top));
 
                 from.Y += Constants.VIncPx;

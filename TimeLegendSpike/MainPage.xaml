@@ -49,9 +49,12 @@
                 </Path.RenderTransform>
             </Path>
         </RepeatButton>
-        <Canvas Grid.Row="0"
-                Grid.Column="1"
-                Background="DarkOliveGreen" />
+        <timeLegendSpike:TopLegendControl Grid.Row="0"
+                                          Grid.Column="1"
+                                          Margin="5"
+                                          Background="DarkOliveGreen"
+                                          Items="{Binding LegendItems}" />
+
         <timeLegendSpike:TimeLegendControl x:Name="TimeLegend"
                                            Grid.Row="1"
                                            Grid.Column="0"

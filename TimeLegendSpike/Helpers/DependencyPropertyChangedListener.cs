@@ -71,7 +71,6 @@ namespace TimeLegendSpike.Helpers
         private RelayObject RelayInstance { get; set; }
 
         public static DependencyPropertyChangedListener Create(DependencyObject sourceElement, string propertyPath)
-        //public static DependencyPropertyChangedListener Create(DependencyObject sourceElement, DependencyProperty property)
         {
             // check input
             if (sourceElement == null)
