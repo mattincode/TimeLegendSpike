@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Jounce</id>
+    <version>2.0.3</version>
+    <title>Jounce</title>
+    <authors>Jeremy Likness</authors>
+    <owners>Jeremy Likness</owners>
+    <licenseUrl>http://jounce.codeplex.com/license</licenseUrl>
+    <projectUrl>http://jounce.codeplex.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Jounce is a reference framework for Silverlight intended to provide guidance for building modular line of business applications that follow the MVVM pattern and utilize the Managed Extensibility Framework (MEF).</description>
+    <summary>Jounce MEF and MVVM Guidance for Silverlight 5</summary>
+    <releaseNotes>Addressed defect #14880 - issue when hosting more than one items control region
+Addressed defect #13151 - CLS Compliance</releaseNotes>
+    <copyright>(c) 2012 Jeremy Likness</copyright>
+    <language />
+    <tags>silverlight mvvm mef jounce</tags>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.ComponentModel.Composition" targetFramework="Silverlight5.0" />
+      <frameworkAssembly assemblyName="System.ComponentModel.Composition.Initialization" targetFramework="Silverlight5.0" />
+    </frameworkAssemblies>
+  </metadata>
+</package>
