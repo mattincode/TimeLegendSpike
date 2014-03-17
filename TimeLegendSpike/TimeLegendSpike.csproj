@@ -97,6 +97,9 @@
     <Compile Include="Converters\MultiBindingExpression.cs" />
     <Compile Include="Converters\MultiBindingValidationError.cs" />
     <Compile Include="Converters\TimePeriodEnableConverter.cs" />
+    <Compile Include="DrawingAreaControl.xaml.cs">
+      <DependentUpon>DrawingAreaControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\DependencyPropertyChangedListener.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -117,6 +120,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="DrawingAreaControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
