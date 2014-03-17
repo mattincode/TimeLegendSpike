@@ -62,56 +62,58 @@
                                                          Mode=TwoWay}"
                                            Start="{Binding Start,
                                                            Mode=TwoWay}" />
-        <!--
-            <telerik:RadTileView x:Name="DashBoard"
-            Grid.Row="1"
-            Grid.Column="1"
-            ColumnWidth="Auto"
-            IsItemDraggingEnabled="True"
-            IsItemsSizeInPercentages="True"
-            MinimizedColumnWidth="375"
-            MinimizedRowHeight="Auto"
-            PreservePositionWhenMaximized="true"
-            RowHeight="Auto"
-            telerik:TileViewPanel.IsColumnsShrinkEnabled="True"
-            telerik:TileViewPanel.IsRowsShrinkEnabled="True"
-            telerik:TileViewPanel.IsSizeBoundToPosition="True">
+
+        <telerik:RadTileView x:Name="DashBoard"
+                             Grid.Row="1"
+                             Grid.Column="1"
+                             ColumnWidth="Auto"
+                             IsItemDraggingEnabled="True"
+                             IsItemsSizeInPercentages="True"
+                             MinimizedColumnWidth="375"
+                             MinimizedRowHeight="Auto"
+                             PreservePositionWhenMaximized="true"
+                             RowHeight="Auto"
+                             telerik:TileViewPanel.IsColumnsShrinkEnabled="True"
+                             telerik:TileViewPanel.IsRowsShrinkEnabled="True"
+                             telerik:TileViewPanel.IsSizeBoundToPosition="True">
             <telerik:RadTileViewItem x:Name="PeriodsSelectionTile"
-            Header="Tile 1"
-            MinimizedHeight="400"
-            Padding="5"
-            Position="0"
-            RestoredHeight="50"
-            RestoredWidth="18">
-            <Canvas Background="Salmon" />
+                                     Header="Tile 1"
+                                     MinimizedHeight="400"
+                                     Padding="5"
+                                     Position="0"
+                                     RestoredHeight="50"
+                                     RestoredWidth="18">
+                <Canvas Background="Salmon" />
             </telerik:RadTileViewItem>
             <telerik:RadTileViewItem x:Name="SummaryTile"
-            Header="Tile 1"
-            MinimizedHeight="400"
-            Padding="5"
-            Position="2"
-            RestoredHeight="50"
-            RestoredWidth="18">
-            <Canvas Background="Silver" />
+                                     Header="Tile 1"
+                                     MinimizedHeight="400"
+                                     Padding="5"
+                                     Position="2"
+                                     RestoredHeight="50"
+                                     RestoredWidth="18">
+                <Canvas Background="Silver" />
             </telerik:RadTileViewItem>
-            
+
             <telerik:RadTileViewItem x:Name="VacancyAdjustmentTile"
-            Header="drawingTile"
-            MinimizedHeight="400"
-            Padding="5"
-            Position="1"
-            RestoredHeight="100"
-            RestoredWidth="82"
-            TileState="Maximized">
-            
-            <Canvas Background="BurlyWood" />
+                                     Header="drawingTile"
+                                     MinimizedHeight="400"
+                                     Padding="5"
+                                     Position="1"
+                                     RestoredHeight="100"
+                                     RestoredWidth="82"
+                                     TileState="Maximized">
+
+                <Canvas Background="BurlyWood" />
             </telerik:RadTileViewItem>
-            
-            </telerik:RadTileView>
+
+        </telerik:RadTileView>
+
+        <!--
+            <Canvas Grid.Row="1"
+            Grid.Column="1"
+            Background="BurlyWood" />
         -->
-        <Canvas Grid.Row="1"
-                Grid.Column="1"
-                Background="BurlyWood" />
 
         <RepeatButton Grid.Row="2"
                       Grid.Column="0"

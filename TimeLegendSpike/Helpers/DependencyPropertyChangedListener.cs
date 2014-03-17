@@ -4,6 +4,24 @@ using System.Windows.Data;
 
 namespace TimeLegendSpike.Helpers
 {
+    //public static class DependencyPropertyListener
+    //{
+    //    public static void RegisterForNotification(string propertyName, object source, PropertyChangedCallback callback)
+    //    {
+    //        Binding b = new Binding(propertyName);
+    //        b.Source = source;
+
+    //        DependencyProperty prop = DependencyProperty.RegisterAttached(
+    //            "ListenAttached" + propertyName,
+    //            typeof(object),
+    //            this.GetType(),
+    //            new PropertyMetadata(callback));
+
+    //        BindingOperations.SetBinding(this, prop, b);
+    //    }
+    //}
+
+
     /// <summary>
     /// This class implements a listener to receive notifications for dependency property changes.
     /// </summary>

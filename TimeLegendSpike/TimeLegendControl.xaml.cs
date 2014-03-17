@@ -2,8 +2,8 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
-using TimeLegendSpike.Helpers;
 
 namespace TimeLegendSpike
 {
@@ -12,7 +12,7 @@ namespace TimeLegendSpike
         private SolidColorBrush _timeLegendFontBrush = new SolidColorBrush(Colors.Black);
 
         #region Dependency properties
-        public static readonly DependencyProperty StartProperty = DependencyProperty.Register("Start", typeof(DateTime), typeof(UserControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty StartProperty = DependencyProperty.Register("Start", typeof(DateTime), typeof(UserControl), new PropertyMetadata(new PropertyChangedCallback(StartPeriodChanged)));
         public DateTime Start
         {
             get { return (DateTime)GetValue(StartProperty); }
@@ -48,15 +48,16 @@ namespace TimeLegendSpike
             InitializeComponent();
 
             // Subscribe to change notifications
-            DependencyPropertyChangedListener startPeriodListener = DependencyPropertyChangedListener.Create(this, "Start");
-            startPeriodListener.ValueChanged += StartPeriodChanged;
             this.SizeChanged += TimeLegendControl_SizeChanged;
         }
 
-        void StartPeriodChanged(object sender, DependencyPropertyValueChangedEventArgs e)
+        private static void StartPeriodChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            Debug.WriteLine("#TimeLegendControl_StartPeriodChanged");
-            DrawTime();
+            var control = sender as TimeLegendControl;
+            if (control != null)
+            {
+                control.DrawTime();
+            }
         }
 
         void TimeLegendControl_SizeChanged(object sender, SizeChangedEventArgs e)

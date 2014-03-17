@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using TimeLegendSpike.Helpers;
 
 namespace TimeLegendSpike
 {
@@ -13,7 +10,7 @@ namespace TimeLegendSpike
     {
         private SolidColorBrush _fontBrush = new SolidColorBrush(Colors.Black);
         #region Dependency properties
-        public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(IEnumerable<TopLegendItem>), typeof(UserControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(IEnumerable<TopLegendItem>), typeof(UserControl), new PropertyMetadata(new PropertyChangedCallback(ItemsChanged)));
         public IEnumerable<TopLegendItem> Items
         {
             get { return (IEnumerable<TopLegendItem>)GetValue(ItemsProperty); }
@@ -29,17 +26,19 @@ namespace TimeLegendSpike
             InitializeComponent();
 
             // Subscribe to change notifications
-            DependencyPropertyChangedListener itemsChangedListener = DependencyPropertyChangedListener.Create(this, "Items");
-            itemsChangedListener.ValueChanged += itemsChangedListener_ValueChanged;
             this.SizeChanged += TopLegendControl_SizeChanged;
         }
 
-        void TopLegendControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        private static void ItemsChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            DrawLegend();
+            var control = sender as TopLegendControl;
+            if (control != null)
+            {
+                control.DrawLegend();   
+            }
         }
 
-        void itemsChangedListener_ValueChanged(object sender, DependencyPropertyValueChangedEventArgs e)
+        void TopLegendControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             DrawLegend();
         }
