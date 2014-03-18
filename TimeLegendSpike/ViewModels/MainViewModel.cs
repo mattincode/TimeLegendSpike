@@ -11,12 +11,18 @@ namespace TimeLegendSpike.ViewModels
     {
         private DateTime _start;
         private DateTime _end;
-        private List<TopLegendItem> _legendItems;
+        private ObservableCollection<TopLegendItem> _legendItems;
 
         public DateTime Start
         {
             get { return _start; }
-            set { _start = value; RaisePropertyChanged(() => Start); }
+            set
+            {
+                _start = value; 
+                RaisePropertyChanged(() => Start);
+                if (NavigateBackCommand != null)
+                    NavigateBackCommand.RaiseCanExecuteChanged();
+            }
         }
 
         public DateTime End
@@ -28,16 +34,21 @@ namespace TimeLegendSpike.ViewModels
         public DateTime PeriodStart { get; set; }
         public DateTime PeriodEnd { get; set; }
 
-        public ObservableCollection<TopLegendItem> LegendItems { get; private set; }
+        public ObservableCollection<TopLegendItem> LegendItems
+        {
+            get { return _legendItems; }
+            set { _legendItems = value; RaisePropertyChanged(()=> LegendItems); }
+        }
+
         public IActionCommand NavigateBackCommand { get; private set; }
         public IActionCommand NavigateForwardCommand { get; private set; }
 
         public MainViewModel()
         {
             Start = new DateTime(2014,03,1,10,00,00);
-            PeriodStart = Start.AddMinutes(-60);
+            PeriodStart = Start; //.AddMinutes(-60);
             PeriodEnd = Start.AddDays(2);
-            LegendItems = getDummyDataLegendItems();
+            //LegendItems = getDummyDataLegendItems();
             NavigateBackCommand = new ActionCommand<object>(OnNavigateBack, CanExecuteNavigateBack);
             NavigateForwardCommand = new ActionCommand<object>(OnNavigateForward, CanExecuteNavigateForward);
         }
@@ -53,7 +64,7 @@ namespace TimeLegendSpike.ViewModels
             {
                 items.Add(new TopLegendItem() { Text = "LegendItem" + i, Left = currentPosition, MaxWidth = maxWidth });
                 currentPosition += spacingPx;
-            }
+            }            
 
             return new ObservableCollection<TopLegendItem>(items);
         }

@@ -29,9 +29,10 @@
                       Grid.Column="0"
                       Width="{Binding Path=ActualTextWidth,
                                       ElementName=TimeLegend}"
-                      Height="20"
+                      Height="18"
                       VerticalAlignment="Bottom"
-                      Command="{Binding NavigateBackCommand}">
+                      Command="{Binding NavigateBackCommand,
+                                        Mode=TwoWay}">
             <Path Width="16"
                   Height="16"
                   Margin="0,0,0,0"
@@ -77,8 +78,7 @@
                              telerik:TileViewPanel.IsRowsShrinkEnabled="True"
                              telerik:TileViewPanel.IsSizeBoundToPosition="True">
             <telerik:RadTileViewItem x:Name="PeriodsSelectionTile"
-                                     HorizontalAlignment="Stretch"
-                                     VerticalContentAlignment="Stretch"
+
                                      Header="Tile 1"
                                      Padding="5"
                                      Position="0"
@@ -89,8 +89,7 @@
                         Background="Salmon" />
             </telerik:RadTileViewItem>
             <telerik:RadTileViewItem x:Name="SummaryTile"
-                                     HorizontalAlignment="Stretch"
-                                     VerticalContentAlignment="Stretch"
+  
                                      Header="Tile 2"
                                      Padding="5"
                                      Position="2"
@@ -109,22 +108,16 @@
                                      RestoredWidth="82"
                                      TileState="Maximized">
 
-                <Canvas Background="BurlyWood" />
+                <timeLegendSpike:DrawingAreaControl Items="{Binding LegendItems, Mode=TwoWay}" />
             </telerik:RadTileViewItem>
 
         </telerik:RadTileView>
-
-        <!--
-            <Canvas Grid.Row="1"
-            Grid.Column="1"
-            Background="BurlyWood" />
-        -->
 
         <RepeatButton Grid.Row="2"
                       Grid.Column="0"
                       Width="{Binding Path=ActualTextWidth,
                                       ElementName=TimeLegend}"
-                      Height="20"
+                      Height="18"
                       VerticalAlignment="Top"
                       Command="{Binding NavigateForwardCommand}">
             <Path Width="16"
