@@ -1,0 +1,99 @@
+﻿<UserControl x:Class="TimeLegendSpike.ContainerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:timeLegendSpike="clr-namespace:TimeLegendSpike"
+             xmlns:viewModels="clr-namespace:TimeLegendSpike.ViewModels"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+
+    <Grid x:Name="LayoutRoot"
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch"
+          Background="White"
+          d:DataContext="{d:DesignInstance viewModels:MainViewModel,
+                                           IsDesignTimeCreatable=False}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <RepeatButton Grid.Row="0"
+                      Grid.Column="0"
+                      Width="{Binding Path=ActualTextWidth,
+                                      ElementName=TimeLegend}"
+                      Height="18"
+                      VerticalAlignment="Bottom"
+                      Command="{Binding NavigateBackCommand,
+                                        Mode=TwoWay}">
+            <Path Width="16"
+                  Height="16"
+                  Margin="0,0,0,0"
+                  Data="M167.5,212.46L199.5,177.507 231.5,212.46 167.5,212.46z"
+                  Fill="#FF000000"
+                  RenderTransformOrigin="0.5,0.5"
+                  Stretch="Uniform">
+                <Path.RenderTransform>
+                    <TransformGroup>
+                        <TransformGroup.Children>
+                            <RotateTransform Angle="0" />
+                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                        </TransformGroup.Children>
+                    </TransformGroup>
+                </Path.RenderTransform>
+            </Path>
+        </RepeatButton>
+        <timeLegendSpike:TopLegendControl Grid.Row="0"
+                                          Grid.Column="1"
+                                          Margin="5"
+                                          Background="DarkOliveGreen"
+                                          Items="{Binding LegendItems}" />
+
+        <timeLegendSpike:TimeLegendControl x:Name="TimeLegend"
+                                           Grid.Row="1"
+                                           Grid.Column="0"
+                                           End="{Binding End,
+                                                         Mode=TwoWay}"
+                                           Start="{Binding Start,
+                                                           Mode=TwoWay}" />
+
+        <timeLegendSpike:DrawingAreaControl Grid.Row="1"
+                                            Grid.Column="1"
+                                            Items="{Binding LegendItems,
+                                                            Mode=TwoWay}" />
+
+
+        <RepeatButton Grid.Row="2"
+                      Grid.Column="0"
+                      Width="{Binding Path=ActualTextWidth,
+                                      ElementName=TimeLegend}"
+                      Height="18"
+                      VerticalAlignment="Top"
+                      Command="{Binding NavigateForwardCommand}">
+            <Path Width="16"
+                  Height="16"
+                  Margin="0,0,0,0"
+                  Data="M454.165,177.507L422.165,212.46 390.165,177.507 454.165,177.507z"
+                  Fill="#FF000000"
+                  RenderTransformOrigin="0.5,0.5"
+                  Stretch="Uniform">
+                <Path.RenderTransform>
+                    <TransformGroup>
+                        <TransformGroup.Children>
+                            <RotateTransform Angle="0" />
+                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                        </TransformGroup.Children>
+                    </TransformGroup>
+                </Path.RenderTransform>
+            </Path>
+        </RepeatButton>
+
+    </Grid>
+</UserControl>

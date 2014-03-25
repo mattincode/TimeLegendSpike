@@ -92,6 +92,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="ContainerControl.xaml.cs">
+      <DependentUpon>ContainerControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\IMultiValueConverter.cs" />
     <Compile Include="Converters\MultiBinding.cs" />
     <Compile Include="Converters\MultiBindingExpression.cs" />
@@ -120,6 +123,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="ContainerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DrawingAreaControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

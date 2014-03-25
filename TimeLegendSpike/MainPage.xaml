@@ -5,138 +5,193 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
              xmlns:timeLegendSpike="clr-namespace:TimeLegendSpike"
-             xmlns:viewModels="clr-namespace:TimeLegendSpike.ViewModels"
              d:DesignHeight="1000"
              d:DesignWidth="800"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <Thickness x:Key="PaddingValue">3</Thickness>
+    </UserControl.Resources>
 
-    <Grid x:Name="LayoutRoot"
-          HorizontalAlignment="Stretch"
-          VerticalAlignment="Stretch"
-          Background="White"
-          d:DataContext="{d:DesignInstance viewModels:MainViewModel,
-                                           IsDesignTimeCreatable=False}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="30" />
-        </Grid.RowDefinitions>
-        <RepeatButton Grid.Row="0"
-                      Grid.Column="0"
-                      Width="{Binding Path=ActualTextWidth,
-                                      ElementName=TimeLegend}"
-                      Height="18"
-                      VerticalAlignment="Bottom"
-                      Command="{Binding NavigateBackCommand,
-                                        Mode=TwoWay}">
-            <Path Width="16"
-                  Height="16"
-                  Margin="0,0,0,0"
-                  Data="M167.5,212.46L199.5,177.507 231.5,212.46 167.5,212.46z"
-                  Fill="#FF000000"
-                  RenderTransformOrigin="0.5,0.5"
-                  Stretch="Uniform">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <TransformGroup.Children>
-                            <RotateTransform Angle="0" />
-                            <ScaleTransform ScaleX="1" ScaleY="1" />
-                        </TransformGroup.Children>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-        </RepeatButton>
-        <timeLegendSpike:TopLegendControl Grid.Row="0"
-                                          Grid.Column="1"
-                                          Margin="5"
-                                          Background="DarkOliveGreen"
-                                          Items="{Binding LegendItems}" />
-
-        <timeLegendSpike:TimeLegendControl x:Name="TimeLegend"
-                                           Grid.Row="1"
-                                           Grid.Column="0"
-                                           End="{Binding End,
-                                                         Mode=TwoWay}"
-                                           Start="{Binding Start,
-                                                           Mode=TwoWay}" />
-
-        <telerik:RadTileView x:Name="DashBoard"
-                             Grid.Row="1"
-                             Grid.Column="1"
-                             IsAutoScrollingEnabled="False"
+    <Border>
+        <telerik:RadTileView ColumnWidth="Auto"
                              IsItemDraggingEnabled="True"
                              IsItemsSizeInPercentages="True"
                              MinimizedColumnWidth="375"
-                             MinimizedRowHeight="300"
+                             MinimizedRowHeight="400"
                              PreservePositionWhenMaximized="true"
                              RowHeight="Auto"
                              telerik:TileViewPanel.IsColumnsShrinkEnabled="True"
                              telerik:TileViewPanel.IsRowsShrinkEnabled="True"
                              telerik:TileViewPanel.IsSizeBoundToPosition="True">
             <telerik:RadTileViewItem x:Name="PeriodsSelectionTile"
-
-                                     Header="Tile 1"
-                                     Padding="5"
+                                     HorizontalAlignment="Stretch"
+                                     VerticalContentAlignment="Stretch"
+                                     Header="Period"
+                                     Padding="{StaticResource PaddingValue}"
                                      Position="0"
                                      RestoredHeight="50"
                                      RestoredWidth="18">
-                <Canvas HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Background="Salmon" />
+
+                <Canvas Background="RosyBrown" />
+
             </telerik:RadTileViewItem>
-            <telerik:RadTileViewItem x:Name="SummaryTile"
-  
-                                     Header="Tile 2"
-                                     Padding="5"
+            <telerik:RadTileViewItem x:Name="PeriodSummaryTile"
+                                     HorizontalAlignment="Stretch"
+                                     VerticalContentAlignment="Stretch"
+                                     Header="Summary"
+                                     Padding="{StaticResource PaddingValue}"
                                      Position="2"
                                      RestoredHeight="50"
                                      RestoredWidth="18">
-                <Canvas HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Background="Silver" />
-            </telerik:RadTileViewItem>
 
+                <Canvas Background="IndianRed" />
+
+            </telerik:RadTileViewItem>
             <telerik:RadTileViewItem x:Name="VacancyAdjustmentTile"
-                                     Header="drawingTile"
-                                     Padding="5"
+                                     Header="Main"
+                                     Padding="{StaticResource PaddingValue}"
                                      Position="1"
                                      RestoredHeight="100"
                                      RestoredWidth="82"
                                      TileState="Maximized">
 
-                <timeLegendSpike:DrawingAreaControl Items="{Binding LegendItems, Mode=TwoWay}" />
-            </telerik:RadTileViewItem>
+                <timeLegendSpike:ContainerControl />
 
+            </telerik:RadTileViewItem>
         </telerik:RadTileView>
 
-        <RepeatButton Grid.Row="2"
-                      Grid.Column="0"
-                      Width="{Binding Path=ActualTextWidth,
-                                      ElementName=TimeLegend}"
-                      Height="18"
-                      VerticalAlignment="Top"
-                      Command="{Binding NavigateForwardCommand}">
-            <Path Width="16"
-                  Height="16"
-                  Margin="0,0,0,0"
-                  Data="M454.165,177.507L422.165,212.46 390.165,177.507 454.165,177.507z"
-                  Fill="#FF000000"
-                  RenderTransformOrigin="0.5,0.5"
-                  Stretch="Uniform">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <TransformGroup.Children>
-                            <RotateTransform Angle="0" />
-                            <ScaleTransform ScaleX="1" ScaleY="1" />
-                        </TransformGroup.Children>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-        </RepeatButton>
+    </Border>
 
-    </Grid>
+
+    <!--
+        <Grid x:Name="LayoutRoot"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"
+        Background="White"
+        d:DataContext="{d:DesignInstance viewModels:MainViewModel,
+        IsDesignTimeCreatable=False}">
+        <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+        <RowDefinition Height="50" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <RepeatButton Grid.Row="0"
+        Grid.Column="0"
+        Width="{Binding Path=ActualTextWidth,
+        ElementName=TimeLegend}"
+        Height="18"
+        VerticalAlignment="Bottom"
+        Command="{Binding NavigateBackCommand,
+        Mode=TwoWay}">
+        <Path Width="16"
+        Height="16"
+        Margin="0,0,0,0"
+        Data="M167.5,212.46L199.5,177.507 231.5,212.46 167.5,212.46z"
+        Fill="#FF000000"
+        RenderTransformOrigin="0.5,0.5"
+        Stretch="Uniform">
+        <Path.RenderTransform>
+        <TransformGroup>
+        <TransformGroup.Children>
+        <RotateTransform Angle="0" />
+        <ScaleTransform ScaleX="1" ScaleY="1" />
+        </TransformGroup.Children>
+        </TransformGroup>
+        </Path.RenderTransform>
+        </Path>
+        </RepeatButton>
+        <timeLegendSpike:TopLegendControl Grid.Row="0"
+        Grid.Column="1"
+        Margin="5"
+        Background="DarkOliveGreen"
+        Items="{Binding LegendItems}" />
+        
+        <timeLegendSpike:TimeLegendControl x:Name="TimeLegend"
+        Grid.Row="1"
+        Grid.Column="0"
+        End="{Binding End,
+        Mode=TwoWay}"
+        Start="{Binding Start,
+        Mode=TwoWay}" />
+        
+        <telerik:RadTileView x:Name="DashBoard"
+        Grid.Row="1"
+        Grid.Column="1"
+        IsAutoScrollingEnabled="False"
+        IsItemDraggingEnabled="True"
+        IsItemsSizeInPercentages="True"
+        MinimizedColumnWidth="375"
+        MinimizedRowHeight="300"
+        PreservePositionWhenMaximized="true"
+        RowHeight="Auto"
+        telerik:TileViewPanel.IsColumnsShrinkEnabled="True"
+        telerik:TileViewPanel.IsRowsShrinkEnabled="True"
+        telerik:TileViewPanel.IsSizeBoundToPosition="True">
+        <telerik:RadTileViewItem x:Name="PeriodsSelectionTile"
+        
+        Header="Tile 1"
+        Padding="5"
+        Position="0"
+        RestoredHeight="50"
+        RestoredWidth="18">
+        <Canvas HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"
+        Background="Salmon" />
+        </telerik:RadTileViewItem>
+        <telerik:RadTileViewItem x:Name="SummaryTile"
+        
+        Header="Tile 2"
+        Padding="5"
+        Position="2"
+        RestoredHeight="50"
+        RestoredWidth="18">
+        <Canvas HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"
+        Background="Silver" />
+        </telerik:RadTileViewItem>
+        
+        <telerik:RadTileViewItem x:Name="VacancyAdjustmentTile"
+        Header="drawingTile"
+        Padding="5"
+        Position="1"
+        RestoredHeight="100"
+        RestoredWidth="82"
+        TileState="Maximized">
+        
+        <timeLegendSpike:DrawingAreaControl Items="{Binding LegendItems, Mode=TwoWay}" />
+        </telerik:RadTileViewItem>
+        
+        </telerik:RadTileView>
+        
+        <RepeatButton Grid.Row="2"
+        Grid.Column="0"
+        Width="{Binding Path=ActualTextWidth,
+        ElementName=TimeLegend}"
+        Height="18"
+        VerticalAlignment="Top"
+        Command="{Binding NavigateForwardCommand}">
+        <Path Width="16"
+        Height="16"
+        Margin="0,0,0,0"
+        Data="M454.165,177.507L422.165,212.46 390.165,177.507 454.165,177.507z"
+        Fill="#FF000000"
+        RenderTransformOrigin="0.5,0.5"
+        Stretch="Uniform">
+        <Path.RenderTransform>
+        <TransformGroup>
+        <TransformGroup.Children>
+        <RotateTransform Angle="0" />
+        <ScaleTransform ScaleX="1" ScaleY="1" />
+        </TransformGroup.Children>
+        </TransformGroup>
+        </Path.RenderTransform>
+        </Path>
+        </RepeatButton>
+        
+        </Grid>
+    -->
 </UserControl>
