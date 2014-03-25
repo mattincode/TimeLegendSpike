@@ -86,6 +86,7 @@ namespace TimeLegendSpike
 
             for (int i = 0; i < count; i++)
             {
+
                 maxWidth = Math.Max(maxWidth, TextHelper.DrawText(LayoutRoot.Children,
                                         new Point(from.X, from.Y),
                                         MaxWidth,
@@ -94,6 +95,12 @@ namespace TimeLegendSpike
                                         _timeLegendFontBrush,
                                         horizontalAlignment: HorizontalAlignment.Left,
                                         verticalAlignment: VerticalAlignment.Top));
+               //maxWidth = 50;
+
+               // var circlePos = new Point(25, from.Y);
+               // TextHelper.DrawCircle(LayoutRoot.Children, circlePos, new SolidColorBrush(Colors.Red),
+               //     new SolidColorBrush(Colors.Black), new Size(30, 15));
+
 
                 from.Y += Constants.VIncPx;
                 currentTime = currentTime.AddMinutes(Constants.TIncMinutes);
