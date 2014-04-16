@@ -6,9 +6,13 @@
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
              xmlns:timeLegendSpike="clr-namespace:TimeLegendSpike"
              xmlns:viewModels="clr-namespace:TimeLegendSpike.ViewModels"
+             xmlns:helpers="clr-namespace:TimeLegendSpike.Helpers"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <helpers:DataContextProxy x:Key="DataContextProxy" />
+    </UserControl.Resources>    
 
     <Grid x:Name="LayoutRoot"
           HorizontalAlignment="Stretch"
@@ -66,8 +70,9 @@
 
         <timeLegendSpike:DrawingAreaControl Grid.Row="1"
                                             Grid.Column="1"
-                                            Items="{Binding LegendItems,
-                                                            Mode=TwoWay}" />
+                                            PeriodStart="{Binding Start}"
+                                            PeriodEnd="{Binding End}"
+                                            DrawingAreaViewModel="{Binding DrawingAreaViewModel}"/>
 
 
         <RepeatButton Grid.Row="2"

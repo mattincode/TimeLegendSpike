@@ -12,6 +12,13 @@ namespace TimeLegendSpike.ViewModels
         private DateTime _start;
         private DateTime _end;
         private ObservableCollection<TopLegendItem> _legendItems;
+        private DrawingAreaViewModel _drawingAreaViewModel;
+
+        public DrawingAreaViewModel DrawingAreaViewModel
+        {
+            get { return _drawingAreaViewModel; }
+            set { _drawingAreaViewModel = value; RaisePropertyChanged(() => DrawingAreaViewModel); }
+        }
 
         public DateTime Start
         {
@@ -51,6 +58,7 @@ namespace TimeLegendSpike.ViewModels
             //LegendItems = getDummyDataLegendItems();
             NavigateBackCommand = new ActionCommand<object>(OnNavigateBack, CanExecuteNavigateBack);
             NavigateForwardCommand = new ActionCommand<object>(OnNavigateForward, CanExecuteNavigateForward);
+            DrawingAreaViewModel = new DrawingAreaViewModel();
         }
 
         private ObservableCollection<TopLegendItem> getDummyDataLegendItems()
