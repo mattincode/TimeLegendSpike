@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -139,6 +140,134 @@ namespace TimeLegendSpike
             if (bookingControl != null)
                 BookingCanvas.Children.Remove(bookingControl);
         }
+
+        // Calculate the column to use for each booking
+        //private void UpdateColumns()
+        //{
+        //    var sortedBookings = Bookings.OrderBy(x => x.QualificationId);
+        //    foreach (var booking in sortedBookings)
+        //    {
+        //        var columnPositions = Bookings.Select(x => x.ColumnNo).Distinct();
+        //        foreach (var columnPosition in columnPositions)
+        //        {
+        //            double position = columnPosition;
+        //            var shapesInColumn = alreadyDrawn.Where(x => Math.Abs(x.Left - position) < FloatDiff);
+        //            if (!shapesInColumn.Any(x => x.Period.OverlapsWith(shape.Period)))
+        //            {
+        //                // Available space found, check if we have another intersecting shape of the same type 
+        //                var sameTypeIntersecting =
+        //                    shapesInColumn.Where(
+        //                        x => x.Period.Type == shape.Period.Type && x.Period.IntersectsWith(shape.Period));
+        //                columnMatch.Add(new ShapeColumn()
+        //                {
+        //                    Left = columnPosition,
+        //                    SameTypeIntersecting = sameTypeIntersecting.Any()
+        //                });
+        //            }
+        //        }
+        //    }
+
+
+        //    double columnPos;
+        //    var alreadyDrawn = shapesAlreadyDrawn as TimeShape[] ?? shapesAlreadyDrawn.ToArray();
+        //    if (!alreadyDrawn.Any())
+        //        columnPos = bounds.X;
+        //    else
+        //    {
+        //        // Try to find some available space in the already drawn columns
+        //        var columnPositions = alreadyDrawn.Select(x => x.Left).Distinct();
+        //        var columnMatch = new List<ShapeColumn>();
+        //        foreach (var columnPosition in columnPositions)
+        //        {
+        //            double position = columnPosition;
+        //            var shapesInColumn = alreadyDrawn.Where(x => Math.Abs(x.Left - position) < FloatDiff);
+        //            if (!shapesInColumn.Any(x => x.Period.OverlapsWith(shape.Period)))
+        //            {
+        //                // Available space found, check if we have another intersecting shape of the same type 
+        //                var sameTypeIntersecting =
+        //                    shapesInColumn.Where(
+        //                        x => x.Period.Type == shape.Period.Type && x.Period.IntersectsWith(shape.Period));
+        //                columnMatch.Add(new ShapeColumn()
+        //                {
+        //                    Left = columnPosition,
+        //                    SameTypeIntersecting = sameTypeIntersecting.Any()
+        //                });
+        //            }
+        //        }
+
+        //        // Did we find any available space to draw?
+        //        if (columnMatch.Any())
+        //        {
+        //            // Draw in the first available space
+        //            var intersectingShapeColumn = columnMatch.FirstOrDefault(x => x.SameTypeIntersecting);
+        //            columnPos = intersectingShapeColumn != null ? intersectingShapeColumn.Left : columnMatch.First().Left;
+        //        }
+        //        else // No space found, let's move to a new column
+        //        {
+        //            columnPos = columnPositions.Max() + TimeShape.SHAPE_SIZE + SPACING;
+        //        }
+        //    }
+        //    //	        }
+        //    shape.Column = columnPos > bounds.X ? (int)((columnPos - bounds.X) / TimeShape.SHAPE_SIZE) : 1;
+
+
+
+        //}
+
+        //// Calculates position for new shape based on the position of already drawn shapes
+        //private Point CalculateShapePosition(TimeShape shape, IEnumerable<TimeShape> shapesAlreadyDrawn, Bounds bounds)
+        //{
+        //    // If the shape has been designated a column, use that!
+        //    double columnPos;
+        //    //if (shape.Column > 0)
+        //    //{
+        //    //    columnPos = bounds.X + (shape.Column - 1)*TimeShape.SHAPE_SIZE;
+        //    //}
+        //    //else
+        //    //{
+        //    // If no shapes, return upper left corner of bounds
+        //    var alreadyDrawn = shapesAlreadyDrawn as TimeShape[] ?? shapesAlreadyDrawn.ToArray();
+        //    if (!alreadyDrawn.Any())
+        //        columnPos = bounds.X;
+        //    else
+        //    {
+        //        // Try to find some available space in the already drawn columns
+        //        var columnPositions = alreadyDrawn.Select(x => x.Left).Distinct();
+        //        var columnMatch = new List<ShapeColumn>();
+        //        foreach (var columnPosition in columnPositions)
+        //        {
+        //            double position = columnPosition;
+        //            var shapesInColumn = alreadyDrawn.Where(x => Math.Abs(x.Left - position) < FloatDiff);
+        //            if (!shapesInColumn.Any(x => x.Period.OverlapsWith(shape.Period)))
+        //            {
+        //                // Available space found, check if we have another intersecting shape of the same type 
+        //                var sameTypeIntersecting =
+        //                    shapesInColumn.Where(
+        //                        x => x.Period.Type == shape.Period.Type && x.Period.IntersectsWith(shape.Period));
+        //                columnMatch.Add(new ShapeColumn()
+        //                {
+        //                    Left = columnPosition,
+        //                    SameTypeIntersecting = sameTypeIntersecting.Any()
+        //                });
+        //            }
+        //        }
+
+        //        // Did we find any available space to draw?
+        //        if (columnMatch.Any())
+        //        {
+        //            // Draw in the first available space
+        //            var intersectingShapeColumn = columnMatch.FirstOrDefault(x => x.SameTypeIntersecting);
+        //            columnPos = intersectingShapeColumn != null ? intersectingShapeColumn.Left : columnMatch.First().Left;
+        //        }
+        //        else // No space found, let's move to a new column
+        //        {
+        //            columnPos = columnPositions.Max() + TimeShape.SHAPE_SIZE + SPACING;
+        //        }
+        //    }
+        //    //	        }
+        //    shape.Column = columnPos > bounds.X ? (int)((columnPos - bounds.X) / TimeShape.SHAPE_SIZE) : 1;
+        //    return new Point(columnPos, bounds.Y);
+        //}
 
 
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using TimeLegendSpike.ViewModels;
 
 namespace TimeLegendSpike
@@ -92,6 +93,11 @@ namespace TimeLegendSpike
         {
             InitializeComponent();
         }
+
+        private void AirportStaffingBookingControl_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("Show bookingdialog");
+        }
     }
 
     public static class AirportStaffingControlConstants
@@ -102,5 +108,81 @@ namespace TimeLegendSpike
         public const int HWidth = 24;
         public const int HMargin = 1;
     }
+
+
+    // ------------------------- Logic to add ---------------------------------------
+
+    // ###### Bookingdialog
+
+        //    /// <summary>
+        ///// Ctrl-click in the bookings grid to create a new booking. This handler displays the create booking
+        ///// popup with pre-filled dates and planning unit.
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="mouseButtonEventArgs"></param>
+        //private void OnMouseLeftButtonDownEvent(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        //{
+        //    var cellCtrl = sender as FrameworkElement;
+        //    if (cellCtrl != null && (Keyboard.Modifiers & ModifierKeys.Control) > 0)
+        //    {
+        //        var scheduleVm = this.DataContext as WeekScheduleViewModel;
+        //        var cellVm = cellCtrl.DataContext as WeekScheduleBookingsCollection;
+        //        if (scheduleVm != null && cellVm != null && cellVm.StartDate > cellVm.GraphService.CacheService.LatestSalaryMonthLockDate)
+        //        {
+        //            var newBooking = cellVm.GraphService.NewBooking(cellVm.PlanningUnit, cellVm.GraphService.IsPlanned, cellVm.StartDate, cellVm.StartDate.AddDays(1));
+        //            var bookingVm = scheduleVm.NewBookingVm(cellVm.PlanningUnit, cellVm.StartDate);
+        //            var ctrl = new BookingControl(bookingVm, newBooking.StartDate == newBooking.EndDate ? BookingControl.FocusElement.ShiftTimeStart : BookingControl.FocusElement.EmployeeNumber);
+
+        //            GSPApplicationService.Current.AppState.ShowPopup(ctrl, cellCtrl, alignOverParent: true);
+        //        }
+        //    }
+        //}
+
+    // #### Context menu Change/delete
+
+        //   public static RadContextMenu CreateOnBookingCell(FrameworkElement ctrl, BookingViewModel dayVm)
+        //{
+        //    RadContextMenu menu = new RadContextMenu();
+
+        //    var updateBookingItem = GetUpdateBookingMenuItem(ctrl, dayVm);
+        //    if (updateBookingItem != null)
+        //    {
+        //        menu.Items.Add(updateBookingItem);
+        //        menu.Items.Add(new RadMenuItem { IsSeparator = true });
+        //    }
+
+        //    var replaceVacancyItem = GetReplaceVacancyMenuItem(ctrl, dayVm);
+        //    if (replaceVacancyItem != null)
+        //    {
+        //        menu.Items.Add(replaceVacancyItem);
+        //        menu.Items.Add(new RadMenuItem { IsSeparator = true });
+        //    }
+
+        //    if (!dayVm.IsAbsenceDay || dayVm.IsAbsenceDayBookable)
+        //    {
+        //        var addAbsenceItem = GetAddAbsenceMenuItem(ctrl, dayVm.StartDate, dayVm.BaseGraphService, dayVm.Employee);
+        //        if (addAbsenceItem != null)
+        //            menu.Items.Add(addAbsenceItem);
+
+        //        var addPartTimeAbsenceItem = GetAddPartTimeAbsenceMenuItem(ctrl, dayVm.StartDate, dayVm.BaseGraphService, dayVm.Employee);
+        //        if (addPartTimeAbsenceItem != null)
+        //            menu.Items.Add(addPartTimeAbsenceItem);
+        //    }
+
+        //    if (dayVm.IsAbsenceDay)
+        //    {
+        //        var updateAbsenceItems = GetUpdateAbsenceMenuItems(ctrl, dayVm.StartDate, dayVm.BaseGraphService);
+        //        if (updateAbsenceItems.Any())
+        //        {
+        //            if (menu.Items.Any())
+        //                menu.Items.Add(new RadMenuItem { IsSeparator = true });
+
+        //            foreach (var item in updateAbsenceItems)
+        //                menu.Items.Add(item);
+        //        }
+        //    }
+
+        //    return menu;
+        //}
 
 }

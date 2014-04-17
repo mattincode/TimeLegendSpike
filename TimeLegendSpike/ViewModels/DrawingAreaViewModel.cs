@@ -27,24 +27,28 @@ namespace TimeLegendSpike.ViewModels
                         new Booking()
                         {
                             Text = "1",
+                            QualificationId = 1,
                             Start = start,
                             End = start.AddMinutes(90)
                         },
                         new Booking()
                         {
                             Text = "2",
+                            QualificationId = 1,
                             Start = start,
                             End = start.AddMinutes(90),
                         },
                         new Booking()
                         {
                             Text = "10",
+                            QualificationId = 1,
                             Start = start.AddMinutes(120),
                             End = start.AddMinutes(240)
                         },
                         new Booking()
                         {
                             Text = "20",
+                            QualificationId = 1,
                             Start = start.AddMinutes(120),
                             End = start.AddMinutes(240)
                         },
@@ -59,12 +63,14 @@ namespace TimeLegendSpike.ViewModels
                         new Booking()
                         {
                             Text = "3",
+                            QualificationId = 1,
                             Start = start,
                             End = start.AddMinutes(240)
                         },
                         new Booking()
                         {
                             Text = "4",
+                            QualificationId = 1,
                             Start = start.AddMinutes(120),
                             End = start.AddMinutes(240)
                         },

@@ -68,6 +68,7 @@ namespace TimeLegendSpike.ViewModels
         private DateTime _start;
         private DateTime _end;
         private int _columnNo;
+        private int _qualificationId;
 
         public int ColumnNo // Zero based
         {
@@ -115,6 +116,12 @@ namespace TimeLegendSpike.ViewModels
         {
             get { return _width; }
             set { _width = value; RaisePropertyChanged(() => Width); }
+        }
+
+        public int QualificationId
+        {
+            get { return _qualificationId; }
+            set { _qualificationId = value; RaisePropertyChanged(() => QualificationId); }
         }
     }
 }
