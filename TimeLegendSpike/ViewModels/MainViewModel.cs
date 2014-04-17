@@ -58,7 +58,7 @@ namespace TimeLegendSpike.ViewModels
             //LegendItems = getDummyDataLegendItems();
             NavigateBackCommand = new ActionCommand<object>(OnNavigateBack, CanExecuteNavigateBack);
             NavigateForwardCommand = new ActionCommand<object>(OnNavigateForward, CanExecuteNavigateForward);
-            DrawingAreaViewModel = new DrawingAreaViewModel();
+            DrawingAreaViewModel = new DrawingAreaViewModel(Start);
         }
 
         private ObservableCollection<TopLegendItem> getDummyDataLegendItems()

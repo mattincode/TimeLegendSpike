@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Media;
 
 namespace TimeLegendSpike.ViewModels
@@ -13,8 +14,8 @@ namespace TimeLegendSpike.ViewModels
             set { _terminal = value; RaisePropertyChanged(() => Terminal);}
         }
 
-        public DrawingAreaViewModel()
-        {
+        public DrawingAreaViewModel(DateTime start)
+        {            
             var checkpoints = new ObservableCollection<CheckPoint>()
             {
                 new CheckPoint()
@@ -26,34 +27,26 @@ namespace TimeLegendSpike.ViewModels
                         new Booking()
                         {
                             Text = "1",
-                            X = 10,
-                            Y = 10,
-                            Length = 50,
-                            Width = 24
+                            Start = start,
+                            End = start.AddMinutes(90)
                         },
                         new Booking()
                         {
                             Text = "2",
-                            X = 10,
-                            Y = 100,
-                            Length = 50,
-                            Width = 24
+                            Start = start,
+                            End = start.AddMinutes(90),
                         },
                         new Booking()
                         {
                             Text = "10",
-                            X = 50,
-                            Y = 10,
-                            Length = 50,
-                            Width = 24
+                            Start = start.AddMinutes(120),
+                            End = start.AddMinutes(240)
                         },
                         new Booking()
                         {
                             Text = "20",
-                            X = 50,
-                            Y = 100,
-                            Length = 50,
-                            Width = 24
+                            Start = start.AddMinutes(120),
+                            End = start.AddMinutes(240)
                         },
                     }
                 },
@@ -66,18 +59,14 @@ namespace TimeLegendSpike.ViewModels
                         new Booking()
                         {
                             Text = "3",
-                            X = 20,
-                            Y = 30,
-                            Length = 80,
-                            Width = 24
+                            Start = start,
+                            End = start.AddMinutes(240)
                         },
                         new Booking()
                         {
                             Text = "4",
-                            X = 10,
-                            Y = 100,
-                            Length = 100,
-                            Width = 24
+                            Start = start.AddMinutes(120),
+                            End = start.AddMinutes(240)
                         },
                     }
                 }
