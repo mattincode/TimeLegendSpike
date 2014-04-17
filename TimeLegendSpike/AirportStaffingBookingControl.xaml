@@ -8,10 +8,8 @@
              mc:Ignorable="d">
 
     <Border x:Name="MainBorder"
-            Width="{Binding Booking.Width,
-                            RelativeSource={RelativeSource AncestorType=UserControl}}"
-            Height="{Binding Booking.Length,
-                             RelativeSource={RelativeSource AncestorType=UserControl}}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
             Background="BlueViolet"
             CornerRadius="2">
         <TextBlock Text="{Binding Booking.Text, RelativeSource={RelativeSource AncestorType=UserControl}}" />

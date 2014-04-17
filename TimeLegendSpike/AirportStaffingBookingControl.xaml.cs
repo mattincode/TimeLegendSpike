@@ -77,8 +77,8 @@ namespace TimeLegendSpike
             double height = AirportStaffingControlConstants.VIncPx * ((Booking.End.Ticks - Booking.Start.Ticks) / tIncTicks);
             double left = Booking.ColumnNo * (AirportStaffingControlConstants.HWidth + AirportStaffingControlConstants.HMargin);
 
-            Booking.Length = height;                                // On viewmodel (not on model)
-            Booking.Width = AirportStaffingControlConstants.HWidth; // Replace with constant in XAML?
+            this.Height = height;                        
+            this.Width = AirportStaffingControlConstants.HWidth; 
             this.SetValue(Canvas.LeftProperty, left); 
             this.SetValue(Canvas.TopProperty, top);
         }
