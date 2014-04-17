@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using TimeLegendSpike.ViewModels;
@@ -34,7 +36,7 @@ namespace TimeLegendSpike
             }
         }
 
-        public static readonly DependencyProperty BookingsProperty = DependencyProperty.Register("Bookings", typeof(ObservableCollection<Booking>), typeof(UserControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty BookingsProperty = DependencyProperty.Register("Bookings", typeof(ObservableCollection<Booking>), typeof(UserControl), new PropertyMetadata(new PropertyChangedCallback(BookingsChanged)));
         public ObservableCollection<Booking> Bookings
         {
             get { return (ObservableCollection<Booking>)GetValue(BookingsProperty); }
@@ -57,22 +59,34 @@ namespace TimeLegendSpike
             var newEnd = dependencyPropertyChangedEventArgs.NewValue as DateTime?;
             ctl.UpdatePeriodChanged(null, newEnd);
         }
-        #endregion
 
-        
-        private void AirportStaffingPlanningGroupControl_OnLoaded(object sender, RoutedEventArgs e)
+        private static void BookingsChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            BookingCanvas.Children.Clear();
-            foreach (var booking in Bookings)
-            {
-                BookingCanvas.Children.Add(new AirportStaffingBookingControl()
-                {
-                    Booking = booking,
-                    PeriodStart = PeriodStart,
-                    PeriodEnd = PeriodEnd
-                });
+            var oldBookings = e.OldValue as ObservableCollection<Booking>;
+            var bookings = e.NewValue as ObservableCollection<Booking>;
+            var ctrl = sender as AirportStaffingPlanningGroupControl;
+            if (oldBookings != null)
+                bookings.CollectionChanged += ctrl.bookings_CollectionChanged;
+            if (bookings != null)
+                bookings.CollectionChanged += ctrl.bookings_CollectionChanged;
+        }
 
-            }       
+        private void bookings_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (var booking in e.NewItems)
+                {                    
+                    AddBookingControl(booking as Booking);    
+                }                
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                foreach (var booking in e.OldItems)
+                {
+                    RemoveBookingControl(booking as Booking);
+                }                                
+            }
         }
 
         private void UpdatePeriodChanged(DateTime? periodStart, DateTime? periodEnd)
@@ -96,5 +110,36 @@ namespace TimeLegendSpike
                 }
             }
         }
+        #endregion
+
+        
+        // Create controls and add to canvas
+        private void AirportStaffingPlanningGroupControl_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            BookingCanvas.Children.Clear();
+            foreach (var booking in Bookings)
+            {
+                AddBookingControl(booking);
+            }       
+        }
+
+        private void AddBookingControl(Booking booking)
+        {
+            BookingCanvas.Children.Add(new AirportStaffingBookingControl()
+            {
+                Booking = booking,                 
+                PeriodStart = PeriodStart,
+                PeriodEnd = PeriodEnd
+            });        
+        }
+
+        private void RemoveBookingControl(Booking booking)
+        {
+            var bookingControl = BookingCanvas.Children.FirstOrDefault(x => (x as AirportStaffingBookingControl).Booking.Equals(booking));
+            if (bookingControl != null)
+                BookingCanvas.Children.Remove(bookingControl);
+        }
+
+
     }
 }

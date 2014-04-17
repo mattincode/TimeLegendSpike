@@ -55,7 +55,7 @@ namespace TimeLegendSpike
                 booking.PropertyChanged -= ctrl.booking_PropertyChanged;
             if (booking != null)
                 booking.PropertyChanged += ctrl.booking_PropertyChanged;
-            ctrl.UpdatePosition();
+            ctrl.UpdatePosition();  // TODO <- Do we really need this!
         }
 
         private void booking_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+using TimeLegendSpike.ViewModels;
 
 namespace TimeLegendSpike
 {
@@ -17,6 +9,13 @@ namespace TimeLegendSpike
         public ContainerControl()
         {
             InitializeComponent();
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            var vm = this.DataContext as MainViewModel;
+            vm.DrawingAreaViewModel.Terminal.CheckPoints[0].Bookings.RemoveAt(1); //.Bookings[1].Start = vm.DrawingAreaViewModel.Terminal.CheckPoints[0].Bookings[1].Start.AddMinutes(30);
+
         }
     }
 }

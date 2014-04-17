@@ -99,6 +99,8 @@
                 </Path.RenderTransform>
             </Path>
         </RepeatButton>
+        
+        <Button Grid.Row="2" Grid.Column="1" Content="DoStuff" Click="ButtonBase_OnClick"/>
 
     </Grid>
 </UserControl>
