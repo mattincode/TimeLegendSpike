@@ -70,11 +70,15 @@ namespace TimeLegendSpike
         }
 
         private void UpdatePosition()
-        {
+        {            
             var tIncTicks = new TimeSpan(0, 0, AirportStaffingControlConstants.TIncMinutes, 0).Ticks;
             var startOffsetTicks = Booking.Start.Ticks - PeriodStart.Ticks;
-            double top = AirportStaffingControlConstants.VIncPx * (startOffsetTicks / tIncTicks);
-            double height = AirportStaffingControlConstants.VIncPx * ((Booking.End.Ticks - Booking.Start.Ticks) / tIncTicks);
+            var endOffsetTicks = Booking.End.Ticks - PeriodStart.Ticks;
+
+            double periodBottom = ((PeriodEnd.Ticks - PeriodStart.Ticks) / tIncTicks) * AirportStaffingControlConstants.VIncPx;            
+            double top = Math.Max(AirportStaffingControlConstants.VIncPx * (startOffsetTicks / tIncTicks), 0);                  // Limit to top bounds
+            double bottom = Math.Min(AirportStaffingControlConstants.VIncPx * (endOffsetTicks / tIncTicks), periodBottom);      // Limit to bottom bounds
+            double height = Math.Max(bottom - top, 0);            
             double left = Booking.ColumnNo * (AirportStaffingControlConstants.HWidth + AirportStaffingControlConstants.HMargin);
 
             this.Height = height;                        
