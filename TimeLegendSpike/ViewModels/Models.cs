@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Itenso.TimePeriod;
 
 namespace TimeLegendSpike.ViewModels
 {
@@ -69,6 +70,7 @@ namespace TimeLegendSpike.ViewModels
         private DateTime _end;
         private int _columnNo;
         private int _qualificationId;
+        public int Id { get; set; }
 
         public int ColumnNo // Zero based
         {
@@ -123,5 +125,7 @@ namespace TimeLegendSpike.ViewModels
             get { return _qualificationId; }
             set { _qualificationId = value; RaisePropertyChanged(() => QualificationId); }
         }
+
+        public ITimeRange Period { get {return new TimeRange(Start, End);} }
     }
 }

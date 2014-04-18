@@ -79,8 +79,8 @@ namespace TimeLegendSpike
             double periodBottom = ((PeriodEnd.Ticks - PeriodStart.Ticks) / tIncTicks) * AirportStaffingControlConstants.VIncPx;            
             double top = Math.Max(AirportStaffingControlConstants.VIncPx * (startOffsetTicks / tIncTicks), 0);                  // Limit to top bounds
             double bottom = Math.Min(AirportStaffingControlConstants.VIncPx * (endOffsetTicks / tIncTicks), periodBottom);      // Limit to bottom bounds
-            double height = Math.Max(bottom - top, 0);            
-            double left = Booking.ColumnNo * (AirportStaffingControlConstants.HWidth + AirportStaffingControlConstants.HMargin);
+            double height = Math.Max(bottom - top, 0);
+            double left = (Booking.ColumnNo - 1) * (AirportStaffingControlConstants.HWidth + AirportStaffingControlConstants.HMargin);
 
             this.Height = height;                        
             this.Width = AirportStaffingControlConstants.HWidth; 

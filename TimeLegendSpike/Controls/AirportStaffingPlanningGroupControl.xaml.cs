@@ -117,6 +117,7 @@ namespace TimeLegendSpike
         // Create controls and add to canvas
         private void AirportStaffingPlanningGroupControl_OnLoaded(object sender, RoutedEventArgs e)
         {
+            UpdateColumnPositions();
             BookingCanvas.Children.Clear();
             foreach (var booking in Bookings)
             {
@@ -139,6 +140,31 @@ namespace TimeLegendSpike
             var bookingControl = BookingCanvas.Children.FirstOrDefault(x => (x as AirportStaffingBookingControl).Booking.Equals(booking));
             if (bookingControl != null)
                 BookingCanvas.Children.Remove(bookingControl);
+        }
+
+        private void UpdateColumnPositions()
+        {
+            var sortedBookings = Bookings.OrderBy(x => x.QualificationId);
+            foreach (var booking in sortedBookings)
+            {
+                Booking booking1 = booking;
+                var overlappingColumns = Bookings.Where(x => x.Period.OverlapsWith(booking1.Period) && x.Id != booking1.Id).OrderBy(y => y.ColumnNo).Select(z => z.ColumnNo);
+                var enumerable = overlappingColumns as int[] ?? overlappingColumns.ToArray();
+                if (enumerable.Count() == 1)
+                {
+                    booking.ColumnNo = overlappingColumns.Max() + 1;
+                }
+                else if (enumerable.Any())
+                {
+                    int min = enumerable.Min(), max = enumerable.Max();
+                    if (min == 0 && max == 0)
+                        booking.ColumnNo = 1;
+                    else
+                        booking.ColumnNo = Enumerable.Range(min, max - min + 1).Except(enumerable).First();
+                }
+                else
+                    booking.ColumnNo = 1;
+            }        
         }
 
         // Calculate the column to use for each booking

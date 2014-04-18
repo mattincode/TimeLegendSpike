@@ -60,6 +60,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Itenso.TimePeriod">
+      <HintPath>..\packages\TimePeriodLibrary.NET.2.0.0\lib\sl40\Silverlight.Release\Itenso.TimePeriod.dll</HintPath>
+    </Reference>
     <Reference Include="Jounce">
       <HintPath>..\packages\Jounce.2.0.3\lib\sl50\Jounce.dll</HintPath>
     </Reference>
@@ -88,10 +91,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AirportStaffingBookingControl.xaml.cs">
+    <Compile Include="Controls\AirportStaffingBookingControl.xaml.cs">
       <DependentUpon>AirportStaffingBookingControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AirportStaffingPlanningGroupControl.xaml.cs">
+    <Compile Include="Controls\AirportStaffingPlanningGroupControl.xaml.cs">
       <DependentUpon>AirportStaffingPlanningGroupControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
@@ -133,11 +136,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="AirportStaffingBookingControl.xaml">
+    <Page Include="Controls\AirportStaffingBookingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AirportStaffingPlanningGroupControl.xaml">
+    <Page Include="Controls\AirportStaffingPlanningGroupControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
