@@ -3,10 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             Loaded="AirportStaffingPlanningGroupControl_OnLoaded"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
 
-    <Canvas x:Name="BookingCanvas" Width="100" />
+    <Canvas x:Name="BookingCanvas"/>
 </UserControl>

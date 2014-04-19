@@ -5,6 +5,9 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
+using Itenso.TimePeriod;
 using TimeLegendSpike.ViewModels;
 
 namespace TimeLegendSpike
@@ -90,14 +93,18 @@ namespace TimeLegendSpike
             }
         }
 
+        private bool _initDone = false;
         private void UpdatePeriodChanged(DateTime? periodStart, DateTime? periodEnd)
         {
+            if (PeriodStart != DateTime.MinValue && PeriodEnd != DateTime.MinValue && PeriodStart != PeriodEnd)
+                InitControls();
+
             if (periodStart.HasValue)
             {
                 foreach (var control in BookingCanvas.Children)
                 {
                     var bookingControl = control as AirportStaffingBookingControl;
-                    if (bookingControl.PeriodStart != periodStart.Value)
+                    if (bookingControl != null && bookingControl.PeriodStart != periodStart.Value)
                         bookingControl.PeriodStart = periodStart.Value;
                 }
             }
@@ -106,25 +113,29 @@ namespace TimeLegendSpike
                 foreach (var control in BookingCanvas.Children)
                 {
                     var bookingControl = control as AirportStaffingBookingControl;
-                    if (bookingControl.PeriodEnd != periodEnd.Value)
+                    if (bookingControl != null && bookingControl.PeriodEnd != periodEnd.Value)
                         bookingControl.PeriodEnd = periodEnd.Value;
                 }
             }
         }
         #endregion
 
-        
-        // Create controls and add to canvas
-        private void AirportStaffingPlanningGroupControl_OnLoaded(object sender, RoutedEventArgs e)
+        private void InitControls()
         {
-            UpdateColumnPositions();
-            BookingCanvas.Children.Clear();
-            foreach (var booking in Bookings)
+            if (!_initDone)
             {
-                AddBookingControl(booking);
-            }       
+                BookingCanvas.Children.Clear();
+                UpdateColumnPositions();
+                DrawGridlines();
+                foreach (var booking in Bookings)
+                {
+                    AddBookingControl(booking);
+                }
+                _initDone = true;
+            }
         }
 
+        // Create controls and add to canvas
         private void AddBookingControl(Booking booking)
         {
             BookingCanvas.Children.Add(new AirportStaffingBookingControl()
@@ -164,7 +175,46 @@ namespace TimeLegendSpike
                 }
                 else
                     booking.ColumnNo = 1;
-            }        
+            }
+            BookingCanvas.Width = Bookings.Max(x => x.ColumnNo) * AirportStaffingControlConstants.HWidth;            
+        }
+
+        private void DrawGridlines()
+        {
+            var container = BookingCanvas.Children;
+            var from = new Point(0, 0);
+            var to = new Point(BookingCanvas.Width, 0);
+            var time = PeriodStart;
+            var toggleGridline = false;
+
+            while (time <= PeriodEnd)
+            {
+                DrawGridLine(container, from, to, toggleGridline);
+                from.Y += AirportStaffingControlConstants.VIncPx;
+                to.Y += AirportStaffingControlConstants.VIncPx;
+                toggleGridline = !toggleGridline;
+
+                time = time.AddMinutes(30);
+            }
+        }
+
+        // TODO -  Replace with GSP -brushes
+        private readonly SolidColorBrush _gridBrushOddLines = new SolidColorBrush(Colors.LightGray); //TimeShapeHelper.GetBrush(TimeShapeHelper.VacancyBrushTypeEnum.TimeGridLineBrushOdd);
+        private readonly SolidColorBrush _gridBrush = new SolidColorBrush(Colors.DarkGray); //TimeShapeHelper.GetBrush(TimeShapeHelper.VacancyBrushTypeEnum.GroupWarningBrush);
+        // TODO - End
+        private void DrawGridLine(UIElementCollection container, Point from, Point to, bool oddGridLine)
+        {
+            var line = new Line
+            {
+                X1 = from.X,
+                Y1 = from.Y,
+                X2 = to.X,
+                Y2 = to.Y,
+                StrokeThickness = 1,                                
+            };
+            Canvas.SetZIndex(line,-1); // Remove if we want the lines to shine through
+            line.Stroke = oddGridLine ? _gridBrushOddLines : _gridBrush;
+            container.Add(line);
         }
 
         // Calculate the column to use for each booking
