@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Itenso.TimePeriod;
+using Telerik.Windows.Controls;
 using TimeLegendSpike.ViewModels;
 
 namespace TimeLegendSpike
@@ -148,7 +149,8 @@ namespace TimeLegendSpike
 
         private void RemoveBookingControl(Booking booking)
         {
-            var bookingControl = BookingCanvas.Children.FirstOrDefault(x => (x as AirportStaffingBookingControl).Booking.Equals(booking));
+            var bookingControls = BookingCanvas.ChildrenOfType<AirportStaffingBookingControl>();
+            var bookingControl = bookingControls.FirstOrDefault(x => x.Booking.Equals(booking));
             if (bookingControl != null)
                 BookingCanvas.Children.Remove(bookingControl);
         }

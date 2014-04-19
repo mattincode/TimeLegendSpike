@@ -7,5 +7,5 @@
              d:DesignWidth="400"
              mc:Ignorable="d">
 
-    <Canvas x:Name="BookingCanvas"/>
+    <Canvas x:Name="BookingCanvas" Margin="5,0,0,0"/>
 </UserControl>

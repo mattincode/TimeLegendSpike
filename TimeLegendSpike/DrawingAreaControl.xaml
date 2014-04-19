@@ -16,7 +16,7 @@
             <ItemsPanelTemplate>
                 <StackPanel HorizontalAlignment="Left"
                             VerticalAlignment="Stretch"
-                            Orientation="Horizontal" />
+                            Orientation="Horizontal"/>
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
