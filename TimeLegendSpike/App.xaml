@@ -6,5 +6,6 @@
     <Application.Resources>
         <Style TargetType="RepeatButton"/>
         <converters:AirportStaffingBookingToSizeAndPosConverter x:Key="AirportStaffingBookingToSizeAndPosConverter"/>
+        <converters:OddValueBrushConverter x:Key="OddValueBrushConverter"/>
     </Application.Resources>
 </Application>

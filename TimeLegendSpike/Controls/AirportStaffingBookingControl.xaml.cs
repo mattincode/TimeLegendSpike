@@ -103,7 +103,7 @@ namespace TimeLegendSpike
     public static class AirportStaffingControlConstants
     {
         public const int TIncMinutes = 30; // 30 minutes
-        public const int VIncPx = 18;
+        public const int VIncPx = 15;
         public const int VTextOffset = 0;
         public const int HWidth = 24;
         public const int HMargin = 1;

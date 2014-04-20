@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Itenso.TimePeriod;
 using Telerik.Windows.Controls;
+using TimeLegendSpike.Annotations;
 using TimeLegendSpike.ViewModels;
 
 namespace TimeLegendSpike
 {
-    public partial class AirportStaffingPlanningGroupControl : UserControl
+    public partial class AirportStaffingPlanningGroupControl : UserControl, INotifyPropertyChanged
     {
         public AirportStaffingPlanningGroupControl()
         {
@@ -123,17 +127,27 @@ namespace TimeLegendSpike
 
         private void InitControls()
         {
+            AddGridlines();
             if (!_initDone)
             {
-                BookingCanvas.Children.Clear();
                 UpdateColumnPositions();
-                DrawGridlines();
                 foreach (var booking in Bookings)
                 {
                     AddBookingControl(booking);
                 }
                 _initDone = true;
             }
+        }
+
+        private void AddGridlines()
+        {
+            var gridlines = new List<int>();
+            var count = (PeriodEnd - PeriodStart).TotalMinutes / AirportStaffingControlConstants.TIncMinutes + 1;
+            for (var i = 0; i < count; i++)
+            {
+                gridlines.Add(i);
+            }
+            Gridlines = new ObservableCollection<int>(gridlines);
         }
 
         // Create controls and add to canvas
@@ -143,7 +157,8 @@ namespace TimeLegendSpike
             {
                 Booking = booking,                 
                 PeriodStart = PeriodStart,
-                PeriodEnd = PeriodEnd
+                PeriodEnd = PeriodEnd,
+                Margin = new Thickness(20,0,0,0)
             });        
         }
 
@@ -178,46 +193,20 @@ namespace TimeLegendSpike
                 else
                     booking.ColumnNo = 1;
             }
-            BookingCanvas.Width = Bookings.Max(x => x.ColumnNo) * AirportStaffingControlConstants.HWidth;            
+            BookingCanvas.Width = 20 + Bookings.Max(x => x.ColumnNo) * AirportStaffingControlConstants.HWidth;            
         }
 
-        private void DrawGridlines()
+        public ObservableCollection<int> Gridlines
         {
-            var container = BookingCanvas.Children;
-            var from = new Point(0, 0);
-            var to = new Point(BookingCanvas.Width, 0);
-            var time = PeriodStart;
-            var toggleGridline = false;
-
-            while (time <= PeriodEnd)
-            {
-                DrawGridLine(container, from, to, toggleGridline);
-                from.Y += AirportStaffingControlConstants.VIncPx;
-                to.Y += AirportStaffingControlConstants.VIncPx;
-                toggleGridline = !toggleGridline;
-
-                time = time.AddMinutes(30);
-            }
+            get { return _gridlines; }
+            set { _gridlines = value; RaisePropertyChanged(() => Gridlines); }
         }
 
         // TODO -  Replace with GSP -brushes
         private readonly SolidColorBrush _gridBrushOddLines = new SolidColorBrush(Colors.LightGray); //TimeShapeHelper.GetBrush(TimeShapeHelper.VacancyBrushTypeEnum.TimeGridLineBrushOdd);
         private readonly SolidColorBrush _gridBrush = new SolidColorBrush(Colors.DarkGray); //TimeShapeHelper.GetBrush(TimeShapeHelper.VacancyBrushTypeEnum.GroupWarningBrush);
+        private ObservableCollection<int> _gridlines;
         // TODO - End
-        private void DrawGridLine(UIElementCollection container, Point from, Point to, bool oddGridLine)
-        {
-            var line = new Line
-            {
-                X1 = from.X,
-                Y1 = from.Y,
-                X2 = to.X,
-                Y2 = to.Y,
-                StrokeThickness = 1,                                
-            };
-            Canvas.SetZIndex(line,-1); // Remove if we want the lines to shine through
-            line.Stroke = oddGridLine ? _gridBrushOddLines : _gridBrush;
-            container.Add(line);
-        }
 
         // Calculate the column to use for each booking
         //private void UpdateColumns()
@@ -347,6 +336,86 @@ namespace TimeLegendSpike
         //    return new Point(columnPos, bounds.Y);
         //}
 
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// Raises this object's PropertyChanged event.
+        /// </summary>
+        /// <param name="propertyName">The property that has a new value.</param>
+        protected virtual void RaisePropertyChanged(string propertyName)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        /// <summary>
+        /// Raises this object's PropertyChanged event for each of the properties.
+        /// </summary>
+        /// <param name="propertyNames">The properties that have a new value.</param>
+        protected void RaisePropertyChanged(params string[] propertyNames)
+        {
+            foreach (var name in propertyNames)
+            {
+                RaisePropertyChanged(name);
+            }
+        }
+
+        /// <summary>
+        /// Raises this object's PropertyChanged event.
+        /// </summary>
+        /// <typeparam name="T">The type of the property that has a new value</typeparam>
+        /// <param name="propertyExpression">A Lambda expression representing the property that has a new value.</param>
+        protected void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
+        {
+            var propertyName = ExtractPropertyName(propertyExpression);
+            RaisePropertyChanged(propertyName);
+        }
+
+        protected string ExtractPropertyName<T>(Expression<Func<T>> propertyExpression)
+        {
+            if (propertyExpression == null)
+            {
+                throw new ArgumentNullException("propertyExpression");
+            }
+
+            var memberExpression = propertyExpression.Body as MemberExpression;
+            if (memberExpression == null)
+            {
+                throw new ArgumentException("Property not a member", "propertyExpression");
+            }
+
+            var property = memberExpression.Member as PropertyInfo;
+            if (property == null)
+            {
+                throw new ArgumentException("Not a propery", "propertyExpression");
+            }
+
+            var getMethod = property.GetGetMethod(true);
+
+            if (getMethod == null)
+            {
+                // this shouldn't happen - the expression would reject the property before reaching this far
+                throw new ArgumentException("No getter", "propertyExpression");
+            }
+
+            if (getMethod.IsStatic)
+            {
+                throw new ArgumentException("Static property", "propertyExpression");
+            }
+
+            return memberExpression.Member.Name;
+        }
 
     }
 }
