@@ -2,17 +2,17 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:TimeLegendSpike.Helpers"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
              xmlns:timeLegendSpike="clr-namespace:TimeLegendSpike"
              xmlns:viewModels="clr-namespace:TimeLegendSpike.ViewModels"
-             xmlns:helpers="clr-namespace:TimeLegendSpike.Helpers"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
     <UserControl.Resources>
         <helpers:DataContextProxy x:Key="DataContextProxy" />
-    </UserControl.Resources>    
+    </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot"
           HorizontalAlignment="Stretch"
@@ -70,9 +70,9 @@
 
         <timeLegendSpike:DrawingAreaControl Grid.Row="1"
                                             Grid.Column="1"
-                                            PeriodStart="{Binding Start}"
+                                            DrawingAreaViewModel="{Binding DrawingAreaViewModel}"
                                             PeriodEnd="{Binding End}"
-                                            DrawingAreaViewModel="{Binding DrawingAreaViewModel}"/>
+                                            PeriodStart="{Binding Start}" />
 
 
         <RepeatButton Grid.Row="2"
@@ -99,8 +99,15 @@
                 </Path.RenderTransform>
             </Path>
         </RepeatButton>
-        
-        <Button Grid.Row="2" Grid.Column="1" Content="DoStuff" Click="ButtonBase_OnClick"/>
+
+        <StackPanel Grid.Row="2"
+                    Grid.Column="1"
+                    Orientation="Horizontal">
+            <CheckBox x:Name="UseCanvasCheckbox">Use Canvas</CheckBox>
+            <Button Click="ButtonBase_OnClick" Content="Refresh" />
+            <Button Click="ButtonBase_On2Click" Content="SetContext" />
+            <TextBlock x:Name="TimeElapsedText" />
+        </StackPanel>
 
     </Grid>
 </UserControl>

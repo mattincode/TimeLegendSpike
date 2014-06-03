@@ -91,6 +91,9 @@
     <Compile Include="AirportStaffingBookingControl.xaml.cs">
       <DependentUpon>AirportStaffingBookingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AirportStaffingPGITemsControl.xaml.cs">
+      <DependentUpon>AirportStaffingPGITemsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AirportStaffingPlanningGroupControl.xaml.cs">
       <DependentUpon>AirportStaffingPlanningGroupControl.xaml</DependentUpon>
     </Compile>
@@ -111,6 +114,7 @@
       <DependentUpon>DrawingAreaControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DataContextProxy.cs" />
+    <Compile Include="Helpers\DataTemplateSelector.cs" />
     <Compile Include="Helpers\DependencyPropertyChangedListener.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -136,6 +140,10 @@
     <Page Include="AirportStaffingBookingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AirportStaffingPGITemsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="AirportStaffingPlanningGroupControl.xaml">
       <SubType>Designer</SubType>

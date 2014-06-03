@@ -8,5 +8,7 @@
              d:DesignWidth="400"
              mc:Ignorable="d">
 
-    <Canvas x:Name="BookingCanvas" Width="100" />
+    <Canvas x:Name="BookingCanvas"
+            Width="100"
+            Height="1000" />
 </UserControl>

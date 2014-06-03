@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using TimeLegendSpike.ViewModels;
 
 namespace TimeLegendSpike
@@ -91,12 +92,13 @@ namespace TimeLegendSpike
         }
 
         private void UpdatePeriodChanged(DateTime? periodStart, DateTime? periodEnd)
-        {
+        {            
             if (periodStart.HasValue)
             {
                 foreach (var control in BookingCanvas.Children)
                 {
                     var bookingControl = control as AirportStaffingBookingControl;
+                    if (bookingControl == null) return;
                     if (bookingControl.PeriodStart != periodStart.Value)
                         bookingControl.PeriodStart = periodStart.Value;
                 }
@@ -106,6 +108,7 @@ namespace TimeLegendSpike
                 foreach (var control in BookingCanvas.Children)
                 {
                     var bookingControl = control as AirportStaffingBookingControl;
+                    if (bookingControl == null) return;
                     if (bookingControl.PeriodEnd != periodEnd.Value)
                         bookingControl.PeriodEnd = periodEnd.Value;
                 }
@@ -124,14 +127,70 @@ namespace TimeLegendSpike
             }       
         }
 
+        static SolidColorBrush _bgBrush = new SolidColorBrush(Colors.Blue);
+        static CornerRadius _radius = new CornerRadius(2);
+
         private void AddBookingControl(Booking booking)
         {
-            BookingCanvas.Children.Add(new AirportStaffingBookingControl()
-            {
-                Booking = booking,                 
-                PeriodStart = PeriodStart,
-                PeriodEnd = PeriodEnd
-            });        
+            var border = new Border()
+            {                
+                Height = booking.Length,
+                Width = booking.Width,
+                Background = _bgBrush,
+                CornerRadius = _radius
+            };
+            var stack = new StackPanel(){Orientation = Orientation.Vertical};
+            
+            var text1 = new TextBlock() { Text = booking.Text };
+            var text2 = new TextBlock() { Text = "hej", Width = booking.Width };
+            var text3 = new TextBlock() { Text = "hej2", Width = booking.Width };
+            var text4 = new TextBlock() { Text = "hej3", Width = booking.Width };
+            stack.Children.Add(text1);
+            stack.Children.Add(text2);
+            stack.Children.Add(text3);
+            stack.Children.Add(text4);
+            
+            border.Child = stack;
+            border.SetValue(Canvas.TopProperty, booking.Y);
+            border.SetValue(Canvas.LeftProperty, booking.X);
+            BookingCanvas.Children.Add(border);
+
+
+
+        //            <StackPanel Orientation="Vertical">
+        //    <TextBlock Text="{Binding Booking.Text, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        //    <TextBlock Width="{Binding Booking.Width}" Text="Hej" />
+        //    <TextBlock Width="{Binding Booking.Width}" Text="Hej2" />
+        //    <TextBlock Width="{Binding Booking.Width}" Text="Hej3" />
+        //</StackPanel>
+
+            
+            //BookingCanvas.Children.Add(text1);
+
+
+
+            //            <Border x:Name="MainBorder"
+            //        HorizontalAlignment="Stretch"
+            //        VerticalAlignment="Stretch"
+            //        Background="BlueViolet"
+            //        CornerRadius="2">
+            //    <StackPanel Orientation="Vertical">
+            //        <TextBlock Text="{Binding Booking.Text, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            //        <StackPanel Orientation="Vertical">
+            //            <TextBlock Width="{Binding Booking.Width}" Text="Hej" />
+            //            <TextBlock Width="{Binding Booking.Width}" Text="Hej2" />
+            //            <TextBlock Width="{Binding Booking.Width}" Text="Hej3" />
+            //        </StackPanel>
+            //    </StackPanel>
+            //</Border>
+
+
+            //BookingCanvas.Children.Add(new AirportStaffingBookingControl()
+            //{
+            //    Booking = booking,                 
+            //    PeriodStart = PeriodStart,
+            //    PeriodEnd = PeriodEnd
+            //});        
         }
 
         private void RemoveBookingControl(Booking booking)

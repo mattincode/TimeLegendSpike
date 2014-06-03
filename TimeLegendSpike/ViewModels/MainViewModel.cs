@@ -13,6 +13,7 @@ namespace TimeLegendSpike.ViewModels
         private DateTime _end;
         private ObservableCollection<TopLegendItem> _legendItems;
         private DrawingAreaViewModel _drawingAreaViewModel;
+        private bool _useCanvas;
 
         public DrawingAreaViewModel DrawingAreaViewModel
         {
@@ -50,6 +51,12 @@ namespace TimeLegendSpike.ViewModels
         public IActionCommand NavigateBackCommand { get; private set; }
         public IActionCommand NavigateForwardCommand { get; private set; }
 
+        public bool UseCanvas
+        {
+            get { return _useCanvas; }
+            set { _useCanvas = value; RaisePropertyChanged(() => UseCanvas); }
+        }
+
         public MainViewModel()
         {
             Start = new DateTime(2014,03,1,10,00,00);
@@ -58,24 +65,15 @@ namespace TimeLegendSpike.ViewModels
             //LegendItems = getDummyDataLegendItems();
             NavigateBackCommand = new ActionCommand<object>(OnNavigateBack, CanExecuteNavigateBack);
             NavigateForwardCommand = new ActionCommand<object>(OnNavigateForward, CanExecuteNavigateForward);
-            DrawingAreaViewModel = new DrawingAreaViewModel(Start);
+            //DrawingAreaViewModel = new DrawingAreaViewModel(Start);
         }
 
-        private ObservableCollection<TopLegendItem> getDummyDataLegendItems()
+        public void Redraw(bool? useCanvas)
         {
-            const int maxWidth = 30;
-            const int spacingPx = 80;
-            double currentPosition = 0;
-
-            var items = new List<TopLegendItem>();
-            for (int i = 0; i < 5; i++)
-            {
-                items.Add(new TopLegendItem() { Text = "LegendItem" + i, Left = currentPosition, MaxWidth = maxWidth });
-                currentPosition += spacingPx;
-            }            
-
-            return new ObservableCollection<TopLegendItem>(items);
+            DrawingAreaViewModel = new DrawingAreaViewModel(Start){UseCanvas = useCanvas};
         }
+
+
 
         #region Commands
         private bool CanExecuteNavigateBack(object o)
